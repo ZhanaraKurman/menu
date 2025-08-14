@@ -788,6 +788,8 @@
             transition: all 0.3s ease;
             transform: translateY(20px);
             opacity: 0;
+            transform: translateX(-50%);
+            transition: all 0.3s ease, transform 0s;
         }
 
         .cart-button.show {
@@ -978,6 +980,14 @@
             line-height: 1.4;
         }
 
+        @media (min-width: 769px) {
+            .cart-button {
+                transform: none;
+                right: 20px;
+                left: auto;
+            }
+        }
+
         @media (max-width: 768px) {
             .cart-button {
                 position: fixed;
@@ -1002,9 +1012,9 @@
             }
 
             @keyframes cartBounce {
-                0% { transform: translateX(-50%) scale(1); margin-bottom: 0; }
-                50% { transform: translateX(-50%) scale(1.1); margin-bottom: 5px; }
-                100% { transform: translateX(-50%) scale(1); margin-bottom: 0; }
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
             }
             
             .cart-modal-content {
@@ -1079,9 +1089,9 @@
         }
 
         @keyframes cartBounce {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+            100% { transform: translateX(-50%) scale(1); }
         }
 
         .cart-bounce {
@@ -2107,13 +2117,19 @@
                 });
             }
             
-            // Анимация корзины (без прямого изменения transform)
             const cartButton = document.querySelector('.cart-button');
-            cartButton.style.transform = ''; // Сброс любых inline-стилей
+            
+            const originalTransform = window.getComputedStyle(cartButton).transform;
+            
             cartButton.classList.add('cart-bounce');
             
             setTimeout(() => {
                 cartButton.classList.remove('cart-bounce');
+                if (window.innerWidth <= 768) {
+                    cartButton.style.transform = 'translateX(-50%)';
+                } else {
+                    cartButton.style.transform = originalTransform || '';
+                }
             }, 500);
             
             updateCartButton();
