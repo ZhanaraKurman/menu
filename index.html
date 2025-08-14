@@ -983,28 +983,28 @@
                 position: fixed;
                 bottom: 20px;
                 left: 50%;
-                transform: translateX(-50%) translateY(20px) !important;
+                transform: translateX(-50%) !important;
                 width: calc(100% - 40px);
                 max-width: 400px;
                 justify-content: center;
                 margin: 0 auto;
                 box-shadow: 0 4px 15px rgba(255, 107, 53, 0.6);
-                transition: transform 0.3s ease, opacity 0.3s ease;
+                opacity: 0;
+                transition: opacity 0.3s ease, box-shadow 0.3s ease;
             }
             
             .cart-button.show {
-                transform: translateX(-50%) translateY(0) !important;
+                opacity: 1;
             }
             
             .cart-button:hover {
-                transform: translateX(-50%) translateY(-2px) !important;
                 box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
             }
-            
+
             @keyframes cartBounce {
-                0% { transform: translateX(-50%) scale(1); }
-                50% { transform: translateX(-50%) scale(1.1); }
-                100% { transform: translateX(-50%) scale(1); }
+                0% { transform: translateX(-50%) scale(1); margin-bottom: 0; }
+                50% { transform: translateX(-50%) scale(1.1); margin-bottom: 5px; }
+                100% { transform: translateX(-50%) scale(1); margin-bottom: 0; }
             }
             
             .cart-modal-content {
@@ -1051,7 +1051,6 @@
             }
         }
 
-        /* Кнопка добавления в корзину */
         .add-to-cart {
             position: absolute;
             bottom: 15px;
@@ -1079,7 +1078,6 @@
             box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
         }
 
-        /* Анимация добавления в корзину */
         @keyframes cartBounce {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -1090,7 +1088,6 @@
             animation: cartBounce 0.5s ease;
         }
 
-        /* Анимация изменения суммы */
         @keyframes priceChange {
             0% { transform: scale(1); color: inherit; }
             50% { transform: scale(1.2); color: #6c5ce7; }
@@ -1101,12 +1098,10 @@
             animation: priceChange 0.5s ease;
         }
 
-        /* Плавный скролл для всей страницы */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Анимация загрузки */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -2112,9 +2107,11 @@
                 });
             }
             
-            // Анимация кнопки корзины
+            // Анимация корзины (без прямого изменения transform)
             const cartButton = document.querySelector('.cart-button');
+            cartButton.style.transform = ''; // Сброс любых inline-стилей
             cartButton.classList.add('cart-bounce');
+            
             setTimeout(() => {
                 cartButton.classList.remove('cart-bounce');
             }, 500);
