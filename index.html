@@ -786,10 +786,7 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s ease;
-            transform: translateY(20px);
-            opacity: 0;
-            transform: translateX(-50%);
-            transition: all 0.3s ease, transform 0s;
+            transform: none !important;
         }
 
         .cart-button.show {
@@ -990,31 +987,20 @@
 
         @media (max-width: 768px) {
             .cart-button {
-                position: fixed;
-                bottom: 20px;
                 left: 50%;
+                right: auto;
                 transform: translateX(-50%) !important;
                 width: calc(100% - 40px);
                 max-width: 400px;
                 justify-content: center;
-                margin: 0 auto;
-                box-shadow: 0 4px 15px rgba(255, 107, 53, 0.6);
-                opacity: 0;
-                transition: opacity 0.3s ease, box-shadow 0.3s ease;
             }
-            
+                    
             .cart-button.show {
                 opacity: 1;
             }
             
             .cart-button:hover {
                 box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
-            }
-
-            @keyframes cartBounce {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.2); }
-                100% { transform: scale(1); }
             }
             
             .cart-modal-content {
@@ -1086,16 +1072,6 @@
             transform: scale(1.1);
             background: #5f3dc4;
             box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
-        }
-
-        @keyframes cartBounce {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.2); }
-            100% { transform: translateX(-50%) scale(1); }
-        }
-
-        .cart-bounce {
-            animation: cartBounce 0.5s ease;
         }
 
         @keyframes priceChange {
@@ -2116,21 +2092,6 @@
                     quantity: 1
                 });
             }
-            
-            const cartButton = document.querySelector('.cart-button');
-            
-            const originalTransform = window.getComputedStyle(cartButton).transform;
-            
-            cartButton.classList.add('cart-bounce');
-            
-            setTimeout(() => {
-                cartButton.classList.remove('cart-bounce');
-                if (window.innerWidth <= 768) {
-                    cartButton.style.transform = 'translateX(-50%)';
-                } else {
-                    cartButton.style.transform = originalTransform || '';
-                }
-            }, 500);
             
             updateCartButton();
             updateCartModal();
